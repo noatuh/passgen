@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    input[type="number"] {
+      width: 60px;
+    }
+    button {
+      background-color: #6200ea;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3700b3;
+    }
+    #password {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Password Generator</h1>
+    <label for="length">Length:</label>
+    <input type="number" id="length" min="4" max="128" value="12">
+    <br><br>
+    <label><input type="checkbox" id="includeUpper"> Include Uppercase</label><br>
+    <label><input type="checkbox" id="includeLower" checked> Include Lowercase</label><br>
+    <label><input type="checkbox" id="includeNumbers" checked> Include Numbers</label><br>
+    <label><input type="checkbox" id="includeSymbols"> Include Symbols</label><br><br>
+    <button onclick="generatePassword()">Generate Password</button>
+    <div id="password"></div>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const length = parseInt(document.getElementById('length').value);
+      const includeUpper = document.getElementById('includeUpper').checked;
+      const includeLower = document.getElementById('includeLower').checked;
+      const includeNumbers = document.getElementById('includeNumbers').checked;
+      const includeSymbols = document.getElementById('includeSymbols').checked;
+
+      const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const lower = 'abcdefghijklmnopqrstuvwxyz';
+      const numbers = '0123456789';
+      const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+      let characters = '';
+      if (includeUpper) characters += upper;
+      if (includeLower) characters += lower;
+      if (includeNumbers) characters += numbers;
+      if (includeSymbols) characters += symbols;
+
+      if (!characters) {
+        document.getElementById('password').textContent = 'Please select at least one character set.';
+        return;
+      }
+
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        password += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      document.getElementById('password').textContent = password;
+    }
+  </script>
+</body>
+</html>
